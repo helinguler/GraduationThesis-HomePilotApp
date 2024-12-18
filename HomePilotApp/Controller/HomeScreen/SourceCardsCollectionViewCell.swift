@@ -9,5 +9,9 @@ import UIKit
 
 class SourceCardsCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var energyTypeLabel: UILabel!
+    @IBOutlet weak var sourceAmountLabel: UILabel!
+    @IBOutlet weak var totalCostLabel: UILabel!
+    
     @IBOutlet weak var sourceCardsImage: UIImageView!
 }
