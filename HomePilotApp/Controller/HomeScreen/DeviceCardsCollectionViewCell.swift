@@ -10,8 +10,7 @@ import UIKit
 class DeviceCardsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var deviceNameLabel: UILabel!
-    @IBOutlet weak var deviceCostLabel: UILabel! 
-    @IBOutlet weak var deviceAddButton: UIButton!
+    @IBOutlet weak var deviceCostLabel: UILabel!
     
     @IBOutlet weak var deviceCardsImage: UIImageView!
 }

@@ -14,4 +14,5 @@ class SourceCardsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var totalCostLabel: UILabel!
     
     @IBOutlet weak var sourceCardsImage: UIImageView!
+
 }

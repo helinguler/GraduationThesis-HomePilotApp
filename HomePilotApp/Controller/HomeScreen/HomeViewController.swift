@@ -12,6 +12,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var sourceCardsCollectionView: UICollectionView!
     @IBOutlet weak var deviceCardsCollectionView: UICollectionView!
     
+    
     // Source Cards Variables
     var energyTypeLabel = ["Electricity", "Water", "Natural Gas"]
     var sourceAmountLabel = ["0 kWH", "0 m³", "0 kwH"]
@@ -21,7 +22,6 @@ class HomeViewController: UIViewController {
     // Device Cards Variables
     var deviceNameLabel = ["AC", "Washing Machine", "Natural Gas", "Water Despenser"]
     var deviceCostLabel = ["Cost: 0$", "Cost: 10$", "Cost: 20$", "Cost: 30$"]
-    //var deviceAddButton = []
     var deviceCardsImages = ["a", "b", "c", "d"]
     
     
@@ -60,6 +60,7 @@ class HomeViewController: UIViewController {
     */
 
 }
+
 
 // Delegate and DataSource for SourceCardsCollectionView
 extension HomeViewController: UICalendarViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -126,5 +127,15 @@ extension HomeViewController: UICalendarViewDelegate, UICollectionViewDataSource
         }
          
         return CGSize.zero
+    }
+    
+    // from DeviceCollectionViewCell to Device Screen (DeviceViewController)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "DeviceViewController") as! DeviceViewController
+        
+        vc.deviceNameTitle = deviceNameLabel[indexPath.row]
+        vc.selectedDeviceIndex = indexPath.row
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
