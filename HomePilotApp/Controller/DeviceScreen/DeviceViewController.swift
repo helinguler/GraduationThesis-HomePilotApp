@@ -58,25 +58,26 @@ class DeviceViewController: UIViewController {
                 if let dynamicMetricView = metricView as? DynamicMetricView {
                     let metricName = selectedDevice.metrics[index].name
                     let inputValue = dynamicMetricView.textField.text ?? ""
-                    print("Metric: \(metricName), Input Value: \(inputValue)") // Kontrol için
                     inputs[metricName] = inputValue
                 }
             }
 
-            print("Inputs: \(inputs)") // Tüm metrik değerlerini kontrol edin
-
             let result = selectedDevice.calculateUsage(inputs: inputs)
-            showCalculationResult(usage: result.usage, cost: result.cost)
+            showCalculationResult(result: result)
         
         NotificationCenter.default.post(name: Notification.Name("UpdateTotalCost"), object: result.cost)
     }
     
-    func showCalculationResult(usage: Double, cost: Double) {
-        let message = "You have used \(String(format: "%.2f", usage)) kWh/m³.\nThis will cost you $\(String(format: "%.2f", cost))."
-            
+    func showCalculationResult(result: DeviceUsageResult) {
+        var message = "You have used \(String(format: "%.2f", result.usage)) kWh. This will cost you $\(String(format: "%.2f", result.cost))"
+
+            // Check if there is electricity usage and cost data available
+            if let waterUsage = result.waterUsage, let waterCost = result.waterCost {
+                message += "\n\nWater used: \(String(format: "%.2f", waterUsage)) L. This will cost you $\(String(format: "%.2f", waterCost))"
+            }
+
             let alertController = UIAlertController(title: "Energy Consumption", message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default)
-            
             alertController.addAction(okAction)
             present(alertController, animated: true)
     }
