@@ -9,7 +9,7 @@ import UIKit
 
 class DynamicMetricView: UIView {
     private let nameLabel = UILabel()
-    private let textField = UITextField()
+    let textField = UITextField()
 
     init(metric: DeviceMetric) {
         super.init(frame: .zero)
@@ -22,14 +22,16 @@ class DynamicMetricView: UIView {
 
     private func setupView(metric: DeviceMetric) {
         nameLabel.text = metric.name
-        nameLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        nameLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         
         textField.placeholder = metric.placeholder
         textField.borderStyle = .roundedRect
         
+        
         let stackView = UIStackView(arrangedSubviews: [nameLabel, textField])
         stackView.axis = .vertical
         stackView.spacing = 8
+        stackView.distribution = .fillEqually
         
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -42,3 +44,5 @@ class DynamicMetricView: UIView {
         ])
     }
 }
+
+

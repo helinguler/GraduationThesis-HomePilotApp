@@ -21,7 +21,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3sU-01-f1I">
                                 <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gC4-ek-tsL" userLabel="S View">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gC4-ek-tsL" userLabel="Home View">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="715"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="123" translatesAutoresizingMaskIntoConstraints="NO" id="iBR-Xr-YLO" userLabel="First Stack View">
@@ -37,7 +37,7 @@
                                                         <rect key="frame" x="294.33333333333331" y="0.0" width="58.666666666666686" height="40.666666666666664"/>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" image="bell.badge.fill" catalog="system">
-                                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="baseForegroundColor" systemColor="labelColor"/>
                                                         </buttonConfiguration>
                                                     </button>
                                                 </subviews>
@@ -53,7 +53,7 @@
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysq-mG-Mbq">
                                                         <rect key="frame" x="226.66666666666666" y="0.0" width="126.33333333333334" height="38"/>
-                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="tintColor" systemColor="labelColor"/>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" title="More ">
                                                             <imageReference key="image" image="arrowshape.right.circle" catalog="system" symbolScale="default"/>
@@ -129,7 +129,7 @@
                                                                 <constraint firstAttribute="trailing" secondItem="2MC-1x-seH" secondAttribute="trailing" constant="8" id="ylV-EN-W9n"/>
                                                             </constraints>
                                                         </collectionViewCellContentView>
-                                                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                                                        <color key="backgroundColor" red="0.59607843137254901" green="0.75686274509803919" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <size key="customSize" width="393" height="203"/>
                                                         <connections>
                                                             <outlet property="energyTypeLabel" destination="wCE-bF-mlN" id="N2h-Qj-dmz"/>
@@ -146,7 +146,7 @@
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Devices" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="noN-Vd-dDU">
                                                 <rect key="frame" x="20" y="318.66666666666669" width="353" height="24"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -286,31 +286,70 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to Second Page! YEEEY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffp-6d-Gfe">
-                                <rect key="frame" x="16" y="76" width="255" height="53"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="qom-Bo-Dy8">
-                                <rect key="frame" x="131" y="137" width="131" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                </segments>
-                            </segmentedControl>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8jD-ec-RH6">
-                                <rect key="frame" x="141" y="247" width="110" height="200"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </stackView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RBq-kY-073">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Wj-i3-51r" userLabel="Device View">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
+                                        <subviews>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="qom-Bo-Dy8">
+                                                <rect key="frame" x="20" y="10" width="353" height="32"/>
+                                                <segments>
+                                                    <segment title="First"/>
+                                                    <segment title="Second"/>
+                                                </segments>
+                                                <color key="tintColor" systemColor="tintColor"/>
+                                            </segmentedControl>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8jD-ec-RH6">
+                                                <rect key="frame" x="20" y="71" width="353" height="250"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="250" id="prN-cl-B1w"/>
+                                                </constraints>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xPv-ef-RAr">
+                                                <rect key="frame" x="149" y="351" width="95" height="35"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="Calculate"/>
+                                                <connections>
+                                                    <action selector="calculateButtonTapped:" destination="hcl-Ov-SYI" eventType="touchUpInside" id="eRb-2O-uNn"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="8jD-ec-RH6" secondAttribute="trailing" constant="20" id="1bG-IS-c3p"/>
+                                            <constraint firstItem="8jD-ec-RH6" firstAttribute="top" secondItem="qom-Bo-Dy8" secondAttribute="bottom" constant="30" id="8z6-Ud-YGC"/>
+                                            <constraint firstItem="8jD-ec-RH6" firstAttribute="leading" secondItem="0Wj-i3-51r" secondAttribute="leading" constant="20" id="Ki3-0z-SgI"/>
+                                            <constraint firstItem="qom-Bo-Dy8" firstAttribute="top" secondItem="0Wj-i3-51r" secondAttribute="top" constant="10" id="M82-LN-fdX"/>
+                                            <constraint firstItem="xPv-ef-RAr" firstAttribute="top" secondItem="8jD-ec-RH6" secondAttribute="bottom" constant="30" id="Pbv-0P-dQR"/>
+                                            <constraint firstItem="qom-Bo-Dy8" firstAttribute="leading" secondItem="0Wj-i3-51r" secondAttribute="leading" constant="20" id="bnm-0V-xpg"/>
+                                            <constraint firstAttribute="trailing" secondItem="qom-Bo-Dy8" secondAttribute="trailing" constant="20" id="e0T-x7-0xv"/>
+                                            <constraint firstItem="xPv-ef-RAr" firstAttribute="centerX" secondItem="0Wj-i3-51r" secondAttribute="centerX" id="s3S-Ic-evm"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstItem="0Wj-i3-51r" firstAttribute="leading" secondItem="RBq-kY-073" secondAttribute="leading" id="Au8-6R-uY6"/>
+                                    <constraint firstItem="0Wj-i3-51r" firstAttribute="width" secondItem="RBq-kY-073" secondAttribute="width" id="TRE-9a-X5o"/>
+                                    <constraint firstAttribute="bottom" secondItem="0Wj-i3-51r" secondAttribute="bottom" id="frY-3E-NVP"/>
+                                    <constraint firstItem="0Wj-i3-51r" firstAttribute="height" secondItem="RBq-kY-073" secondAttribute="height" priority="250" id="grZ-dK-OzL"/>
+                                    <constraint firstAttribute="trailing" secondItem="0Wj-i3-51r" secondAttribute="trailing" id="qZy-aE-5U6"/>
+                                    <constraint firstItem="0Wj-i3-51r" firstAttribute="top" secondItem="RBq-kY-073" secondAttribute="top" id="uVs-GA-V2S"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="H2j-1t-qVj"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <constraints>
+                            <constraint firstItem="RBq-kY-073" firstAttribute="leading" secondItem="H2j-1t-qVj" secondAttribute="leading" id="dcB-km-SC8"/>
+                            <constraint firstItem="RBq-kY-073" firstAttribute="trailing" secondItem="H2j-1t-qVj" secondAttribute="trailing" id="pss-7g-NoR"/>
+                            <constraint firstItem="RBq-kY-073" firstAttribute="top" secondItem="H2j-1t-qVj" secondAttribute="top" id="tPY-mj-nvW"/>
+                            <constraint firstItem="RBq-kY-073" firstAttribute="bottom" secondItem="H2j-1t-qVj" secondAttribute="bottom" id="uhH-zX-cli"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="deviceNameLabel" destination="ffp-6d-Gfe" id="Zjw-7q-eA0"/>
+                        <outlet property="calculateButton" destination="xPv-ef-RAr" id="tci-QR-zys"/>
                         <outlet property="devicePicker" destination="qom-Bo-Dy8" id="GO5-bV-1Js"/>
                         <outlet property="metricContainer" destination="8jD-ec-RH6" id="Z6K-Q8-zb3"/>
                     </connections>
@@ -341,14 +380,14 @@
     <resources>
         <image name="arrowshape.right.circle" catalog="system" width="128" height="123"/>
         <image name="bell.badge.fill" catalog="system" width="117" height="128"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemTealColor">
-            <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

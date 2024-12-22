@@ -12,17 +12,16 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var sourceCardsCollectionView: UICollectionView!
     @IBOutlet weak var deviceCardsCollectionView: UICollectionView!
     
-    
     // Source Cards Variables
     var energyTypeLabel = ["Electricity", "Water", "Natural Gas"]
-    var sourceAmountLabel = ["0 kWH", "0 m³", "0 kwH"]
+    var sourceAmountLabel = ["0 kWH", "0 L", "0 kwH"]
     var totalCostLabel = ["Total Cost: 0$", "Total Cost: 10$", "Total Cost: 20$"]
     var sourceCardsImages = ["1", "2", "3"]
     
     // Device Cards Variables
-    var deviceNameLabel = ["AC", "Washing Machine", "Natural Gas", "Water Despenser"]
-    var deviceCostLabel = ["Cost: 0$", "Cost: 10$", "Cost: 20$", "Cost: 30$"]
-    var deviceCardsImages = ["a", "b", "c", "d"]
+    var deviceNameLabel = ["Air Conditioning", "Washing Machine", "Combi", "Air Humidifier", "Dishwasher", "Oven"]
+    var deviceCostLabel = ["Cost: 0$", "Cost: 10$", "Cost: 20$", "Cost: 30$", "Cost: 30$", "Cost: 30$"]
+    var deviceCardsImages = ["a", "b", "c", "d", "a", "a"]
     
     
     // Adding timer to Source Cards
@@ -36,6 +35,8 @@ class HomeViewController: UIViewController {
         // Timer to Source Cards
         timer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(moveToNext), userInfo: nil, repeats: true)
         
+        // Total cost güncelleme
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTotalCost(_:)), name: Notification.Name("UpdateTotalCost"), object: nil)
     }
     
     // Moving Function for Timer
@@ -48,6 +49,24 @@ class HomeViewController: UIViewController {
         }
         sourceCardsCollectionView.scrollToItem(at: IndexPath(item: currentIndex, section: 0), at: .right, animated: true)
     }
+    
+    // Total cost için func
+    @objc func updateTotalCost(_ notification: Notification) {
+        if let cost = notification.object as? Double {
+            // Total cost mantığını güncelleyin
+            updateTotalCostLabel(newCost: cost)
+        }
+    }
+    
+    func updateTotalCostLabel(newCost: Double) {
+        // Mevcut toplam maliyeti güncellemek için label'ı düzenle
+        if let totalCostLabel = sourceCardsCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? SourceCardsCollectionViewCell {
+            let currentCostText = totalCostLabel.totalCostLabel.text ?? "Total Cost: 0$"
+            let currentCost = Double(currentCostText.components(separatedBy: ":")[1].trimmingCharacters(in: .whitespacesAndNewlines).dropLast()) ?? 0.0
+            let updatedCost = currentCost + newCost
+            totalCostLabel.totalCostLabel.text = "Total Cost: \(String(format: "%.2f", updatedCost))$"
+        }
+    }
 
     /*
     // MARK: - Navigation
@@ -58,7 +77,6 @@ class HomeViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }
 
 
@@ -133,9 +151,9 @@ extension HomeViewController: UICalendarViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "DeviceViewController") as! DeviceViewController
         
-        vc.deviceNameTitle = deviceNameLabel[indexPath.row]
         vc.selectedDeviceIndex = indexPath.row
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+
