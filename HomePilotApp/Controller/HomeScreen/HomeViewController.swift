@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
     
     // Device Cards Variables
     var deviceNameLabel = ["Air Conditioning", "Washing Machine", "Combi", "Air Humidifier", "Dishwasher", "Oven"]
-    var deviceCostLabel = ["Cost: 0$", "Cost: 10$", "Cost: 20$", "Cost: 30$", "Cost: 30$", "Cost: 30$"]
+    var deviceCostLabel = ["Cost: 0$", "Cost: 0$", "Cost: 0$", "Cost: 0$", "Cost: 0$", "Cost: 0$"]
     var deviceCardsImages = ["a", "b", "c", "d", "a", "a"]
     
     
@@ -130,7 +130,7 @@ class HomeViewController: UIViewController {
     }
     
     func formatConsumption(_ consumption: Double, for type: String) -> String {
-        let unit = type == "Electricity" ? "kWh" : "L"
+        let unit = type == "Water" ? "L" : "kWh"
         return String(format: "%.2f %@", consumption, unit)
     }
 
