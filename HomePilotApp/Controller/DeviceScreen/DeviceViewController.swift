@@ -13,6 +13,7 @@ class DeviceViewController: UIViewController {
     @IBOutlet weak var metricContainer: UIStackView!
     @IBOutlet weak var calculateButton: UIButton!
     
+    
     var devices: [DeviceProtocol] = [AC(), WashingMachine(), Combi(), AirHumidifier(), Dishwasher(), Oven()]
     var selectedDeviceIndex: Int = 0
     
@@ -92,7 +93,7 @@ class DeviceViewController: UIViewController {
             present(alertController, animated: true)
     }
     
-    
+
     
     /*
      // MARK: - Navigation

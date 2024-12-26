@@ -12,10 +12,11 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var sourceCardsCollectionView: UICollectionView!
     @IBOutlet weak var deviceCardsCollectionView: UICollectionView!
     
+    
     // Source Cards Variables
     var energyTypeLabel = ["Electricity", "Water", "Natural Gas"]
     var sourceAmountLabel = ["0 kWH", "0 L", "0 kwH"]
-    var totalCostLabel = ["Total Cost: 0$", "Total Cost: 10$", "Total Cost: 20$"]
+    var totalCostLabel = ["Total Cost: 0$", "Total Cost: 0$", "Total Cost: 0$"]
     var sourceCardsImages = ["1", "2", "3"]
     
     // Device Cards Variables
@@ -103,7 +104,7 @@ class HomeViewController: UIViewController {
                 let currentConsumptionText = sourceAmountLabel[index]
                 let currentConsumption = Double(currentConsumptionText.components(separatedBy: " ")[0]) ?? 0
                 let updatedConsumption = currentConsumption + newConsumption
-                sourceAmountLabel[index] = "\(updatedConsumption) \(type == "Electricity" ? "kWH" : "L")"
+                sourceAmountLabel[index] = formatConsumption(updatedConsumption, for: type)
                 
                 // Belirli kartı yeniden yükle
                 sourceCardsCollectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
@@ -127,7 +128,11 @@ class HomeViewController: UIViewController {
     func formatTotalCost(_ cost: Double) -> String {
         return String(format: "Total Cost: %.2f$", cost)
     }
-
+    
+    func formatConsumption(_ consumption: Double, for type: String) -> String {
+        let unit = type == "Electricity" ? "kWh" : "L"
+        return String(format: "%.2f %@", consumption, unit)
+    }
 
     /*
     // MARK: - Navigation
