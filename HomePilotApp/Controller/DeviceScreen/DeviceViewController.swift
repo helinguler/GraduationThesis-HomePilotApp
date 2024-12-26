@@ -50,22 +50,32 @@ class DeviceViewController: UIViewController {
         }
     }
     
-    @IBAction func calculateButtonTapped(_ sender: Any) {
-        let selectedDevice = devices[selectedDeviceIndex]
-            var inputs: [String: String] = [:]
+    @IBAction func calculateButtonTapped(_ sender: Any) {let selectedDevice = devices[selectedDeviceIndex]
+        var inputs: [String: String] = [:]
 
-            for (index, metricView) in metricContainer.arrangedSubviews.enumerated() {
-                if let dynamicMetricView = metricView as? DynamicMetricView {
-                    let metricName = selectedDevice.metrics[index].name
-                    let inputValue = dynamicMetricView.textField.text ?? ""
-                    inputs[metricName] = inputValue
-                }
+        for (index, metricView) in metricContainer.arrangedSubviews.enumerated() {
+            if let dynamicMetricView = metricView as? DynamicMetricView {
+                let metricName = selectedDevice.metrics[index].name
+                let inputValue = dynamicMetricView.textField.text ?? ""
+                inputs[metricName] = inputValue
             }
+        }
 
-            let result = selectedDevice.calculateUsage(inputs: inputs)
-            showCalculationResult(result: result)
+        let result = selectedDevice.calculateUsage(inputs: inputs)
+        showCalculationResult(result: result)
         
-        NotificationCenter.default.post(name: Notification.Name("UpdateTotalCost"), object: result.cost)
+        let userInfo: [String: Any] = [
+            "deviceName": selectedDevice.name,
+            "cost": result.cost,
+            "electricityUsage": result.usage,
+            "waterUsage": result.waterUsage ?? 0,
+            "waterCost": result.waterCost ?? 0,
+            "index": selectedDeviceIndex
+        ]
+        NotificationCenter.default.post(name: Notification.Name("UpdateTotalCost"), object: nil, userInfo: userInfo)
+
+
+
     }
     
     func showCalculationResult(result: DeviceUsageResult) {

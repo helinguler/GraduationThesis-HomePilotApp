@@ -52,10 +52,62 @@ class HomeViewController: UIViewController {
     
     // Total cost için func
     @objc func updateTotalCost(_ notification: Notification) {
-        if let cost = notification.object as? Double {
-            // Total cost mantığını güncelleyin
-            updateTotalCostLabel(newCost: cost)
-        }
+        guard let userInfo = notification.userInfo as? [String: Any],
+                  let deviceName = userInfo["deviceName"] as? String,
+                  let cost = userInfo["cost"] as? Double,
+                  let index = userInfo["index"] as? Int else {
+                return
+            }
+            
+            // Cihaz Kartı Maliyetini Güncelle
+        /*
+            deviceCostLabel[index] = "Cost: \(cost)$"
+            deviceCardsCollectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+         */
+        // Cihaz maliyetini güncelle
+        let currentCostText = deviceCostLabel[index]
+        let currentCost = Double(currentCostText.components(separatedBy: " ")[1].dropLast()) ?? 0
+        let updatedCost = currentCost + cost  // Bu satırda newCost yerine cost kullanılmalı
+        deviceCostLabel[index] = formatCost(updatedCost)  // Maliyeti formatlı şekilde güncelle
+            deviceCardsCollectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+
+
+            // Cihaza bağlı olarak kaynak kartını güncelle
+            switch deviceName {
+            case "Washer", "Dishwasher":
+                let waterCost = userInfo["waterCost"] as? Double ?? 0
+                let waterUsage = userInfo["waterUsage"] as? Double ?? 0
+                let electricityCost = cost
+                let electricityUsage = userInfo["electricityUsage"] as? Double ?? 0
+                updateSourceCard(type: "Water", newCost: waterCost, newConsumption: waterUsage)
+                updateSourceCard(type: "Electricity", newCost: electricityCost, newConsumption: electricityUsage)
+            case "AC", "Air Humidifier":
+                let electricityUsage = userInfo["electricityUsage"] as? Double ?? 0
+                updateSourceCard(type: "Electricity", newCost: cost, newConsumption: electricityUsage)
+            case "Combi", "Oven":
+                let gasUsage = userInfo["electricityUsage"] as? Double ?? 0  // Bu gaz kullanımı olmalı
+                updateSourceCard(type: "Natural Gas", newCost: cost, newConsumption: gasUsage)
+            default: break
+            }
+    }
+    
+    func updateSourceCard(type: String, newCost: Double, newConsumption: Double) {
+        if let index = energyTypeLabel.firstIndex(of: type) {
+                // Maliyeti güncelle
+                let currentCostText = totalCostLabel[index]
+                let currentCost = Double(currentCostText.components(separatedBy: " ")[2].dropLast()) ?? 0
+                let updatedCost = currentCost + newCost
+                totalCostLabel[index] = formatTotalCost(updatedCost)  // Formatlı maliyet metni
+
+                // Tüketimi güncelle
+                let currentConsumptionText = sourceAmountLabel[index]
+                let currentConsumption = Double(currentConsumptionText.components(separatedBy: " ")[0]) ?? 0
+                let updatedConsumption = currentConsumption + newConsumption
+                sourceAmountLabel[index] = "\(updatedConsumption) \(type == "Electricity" ? "kWH" : "L")"
+                
+                // Belirli kartı yeniden yükle
+                sourceCardsCollectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+            }
     }
     
     func updateTotalCostLabel(newCost: Double) {
@@ -67,6 +119,15 @@ class HomeViewController: UIViewController {
             totalCostLabel.totalCostLabel.text = "Total Cost: \(String(format: "%.2f", updatedCost))$"
         }
     }
+    
+    func formatCost(_ cost: Double) -> String {
+        return String(format: "Cost: %.2f$", cost)
+    }
+
+    func formatTotalCost(_ cost: Double) -> String {
+        return String(format: "Total Cost: %.2f$", cost)
+    }
+
 
     /*
     // MARK: - Navigation
