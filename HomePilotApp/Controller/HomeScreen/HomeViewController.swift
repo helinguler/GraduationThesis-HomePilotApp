@@ -56,6 +56,7 @@ class HomeViewController: UIViewController {
         guard let userInfo = notification.userInfo as? [String: Any],
                   let deviceName = userInfo["deviceName"] as? String,
                   let cost = userInfo["cost"] as? Double,
+                  let waterCost = userInfo["waterCost"] as? Double,
                   let index = userInfo["index"] as? Int else {
                 return
             }
@@ -68,7 +69,7 @@ class HomeViewController: UIViewController {
         // Cihaz maliyetini güncelle
         let currentCostText = deviceCostLabel[index]
         let currentCost = Double(currentCostText.components(separatedBy: " ")[1].dropLast()) ?? 0
-        let updatedCost = currentCost + cost  // Bu satırda newCost yerine cost kullanılmalı
+        let updatedCost = currentCost + cost + waterCost // Bu satırda newCost yerine cost kullanılmalı
         deviceCostLabel[index] = formatCost(updatedCost)  // Maliyeti formatlı şekilde güncelle
             deviceCardsCollectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
 

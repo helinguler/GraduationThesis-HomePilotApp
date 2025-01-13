@@ -1,0 +1,6 @@
+framework module Pods_HomePilotApp {
+  umbrella header "Pods-HomePilotApp-umbrella.h"
+
+  export *
+  module * { export * }
+}

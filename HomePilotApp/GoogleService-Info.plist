@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>855563064906-94l8v8vds4ru6g97teh06pik4s1troge.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.855563064906-94l8v8vds4ru6g97teh06pik4s1troge</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAQ2HjSdzLmvvrMaGxCt5_IkX2CG-3gLQI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>855563064906</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.helinguler.HomePilotApp</string>
+	<key>PROJECT_ID</key>
+	<string>homepilotappfirebase-9808f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>homepilotappfirebase-9808f.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:855563064906:ios:dc25813299f1d2eb66b8b3</string>
+</dict>
+</plist>
