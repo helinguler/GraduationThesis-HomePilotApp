@@ -11,21 +11,71 @@ import FirebaseAuth
 
 class SignupViewController: UIViewController {
 
+    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var confirmPasswordField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         if Auth.auth().currentUser != nil {
-            transitionToHome()
+            // User already logged in.
         }
     }
     
-    func transitionToHome() {
+    func showHomeScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        navigationController?.pushViewController(homeViewController, animated: true )
-    }
+        
+        let navigationController = UINavigationController(rootViewController: homeViewController)
 
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = windowScene.windows.first {
+            window.rootViewController = navigationController
+            window.makeKeyAndVisible()
+            UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
+        }
+    }
+     
+    
+    @IBAction func signUpPressed(_ sender: Any) {
+        guard let password = passwordField.text, let confirmPassword = confirmPasswordField.text else { return }
+
+                if password != confirmPassword {
+                    showAlert(title: "Error", message: "Passwords do not match.")
+                    return
+                }
+
+                if !isPasswordValid(password) {
+                    showAlert(title: "Error", message: "Password must be at least 6 characters long, contain one uppercase letter, and one number.")
+                    return
+                }
+
+                Auth.auth().createUser(withEmail: emailField.text!, password: password) { authResult, error in
+                    if let error = error {
+                        self.showAlert(title: "Error", message: error.localizedDescription)
+                        return
+                    }
+
+                    self.showHomeScreen()
+                }
+    }
+    
+    @IBAction func signInPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func isPasswordValid(_ password: String) -> Bool {
+            let passwordRegex = "^(?=.*[A-Z])(?=.*[0-9])[A-Za-z\\d@$!%*?&]{8,}$"
+            return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: password)
+        }
+    func showAlert(title: String, message: String) {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+    
     /*
     // MARK: - Navigation
 

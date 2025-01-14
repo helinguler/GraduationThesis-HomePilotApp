@@ -216,6 +216,7 @@ extension HomeViewController: UICalendarViewDelegate, UICollectionViewDataSource
     
     // from DeviceCollectionViewCell to Device Screen (DeviceViewController)
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "DeviceViewController") as! DeviceViewController
         
         vc.selectedDeviceIndex = indexPath.row

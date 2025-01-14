@@ -10,6 +10,10 @@ import Firebase
 import GoogleSignIn
 
 class LoginViewController: UIViewController {
+   
+    
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
     
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var googleLoginButton: UIButton!
@@ -32,7 +36,7 @@ class LoginViewController: UIViewController {
         checkUserSignInStatus()
     }
     
-    
+    // Login with GoogleSignIn
     @objc func signInWithGoogle() {
         print("Google sign in button tapped")
         
@@ -72,10 +76,52 @@ class LoginViewController: UIViewController {
     func showHomeScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        self.view.window?.rootViewController = homeViewController
-        self.view.window?.makeKeyAndVisible()
+        let navigationController = UINavigationController(rootViewController: homeViewController)
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = windowScene.windows.first {
+                window.rootViewController = navigationController
+                window.makeKeyAndVisible()
+            }
     }
     
+    // Login with Email
+    @IBAction func loginPressed(_ sender: Any) {
+        guard let email = emailField.text, let password = passwordField.text else {
+                return
+            }
+
+            Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+                if let error = error as NSError? {
+                    if let errorCode = AuthErrorCode(rawValue: error.code) {
+                        switch errorCode {
+                        case .userNotFound:
+                            self?.showAlert(title: "Error", message: "No account found for this email address. Please register.")
+                        case .wrongPassword:
+                            self?.showAlert(title: "Error", message: "Incorrect password. Please try again.")
+                        default:
+                            self?.showAlert(title: "Error", message: "An error occurred: \(error.localizedDescription)")
+                        }
+                    } else {
+                        self?.showAlert(title: "Error", message: "An unexpected error occurred.")
+                    }
+                    return
+                }
+
+                // Successful login.
+                self?.showHomeScreen()
+            }
+    }
+    
+    
+    @IBAction func registerPressed(_ sender: Any) {
+        self.performSegue(withIdentifier: "fromLoginToSignUp", sender: self)
+    }
+    
+    func showAlert(title: String, message: String) {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
     
     /*
     // MARK: - Navigation
