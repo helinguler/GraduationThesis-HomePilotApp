@@ -58,6 +58,12 @@ class SignupViewController: UIViewController {
                         return
                     }
 
+                    guard let uid = authResult?.user.uid else { return }
+                    print("User signed up with UID: \(uid)")
+                    // AppDelegate üzerinden Core Data'ya kullanıcıyı kaydet
+                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                        appDelegate.saveUserToCoreData(uid: uid)
+                    }
                     self.showHomeScreen()
                 }
     }

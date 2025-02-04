@@ -31,11 +31,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func checkUserSignInStatus() {
         if let user = Auth.auth().currentUser {
             print("User is already signed in: \(user.uid)")
+            saveUserToCoreData(uid: user.uid) // Core Data'ya UID kaydet
             showHomeScreen()
         }
         else {
             print("No user is sign in.")
             showLoginScreen()
+        }
+    }
+
+    func saveUserToCoreData(uid: String) {
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uid == %@", uid)
+        
+        do {
+            let users = try context.fetch(fetchRequest)
+            if users.isEmpty {
+                let user = User(context: context)
+                user.uid = uid
+                try context.save()
+                print("User saved to Core Data.")
+            } else {
+                print("User already exists in Core Data.")
+            }
+        } catch {
+            print("Failed to save user: \(error)")
         }
     }
     
@@ -48,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
     }
-    
 
     // MARK: UISceneSession Lifecycle
 
@@ -108,5 +128,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }

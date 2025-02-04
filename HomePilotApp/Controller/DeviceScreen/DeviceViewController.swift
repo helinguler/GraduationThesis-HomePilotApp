@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import CoreData
+import FirebaseAuth
 
 class DeviceViewController: UIViewController {
     
     @IBOutlet weak var devicePicker: UISegmentedControl!
     @IBOutlet weak var metricContainer: UIStackView!
     @IBOutlet weak var calculateButton: UIButton!
-    
     
     var devices: [DeviceProtocol] = [AC(), WashingMachine(), Combi(), AirHumidifier(), Dishwasher(), Oven()]
     var selectedDeviceIndex: Int = 0
@@ -64,36 +65,43 @@ class DeviceViewController: UIViewController {
 
         let result = selectedDevice.calculateUsage(inputs: inputs)
         showCalculationResult(result: result)
-        
-        let userInfo: [String: Any] = [
-            "deviceName": selectedDevice.name,
-            "cost": result.cost,
-            "electricityUsage": result.usage,
-            "waterUsage": result.waterUsage ?? 0,
-            "waterCost": result.waterCost ?? 0,
-            "index": selectedDeviceIndex
-        ]
-        NotificationCenter.default.post(name: Notification.Name("UpdateTotalCost"), object: nil, userInfo: userInfo)
 
-
-
+        // Core Data'ya kaydet
+        if let currentUserUID = Auth.auth().currentUser?.uid,
+            let currentUser = CoreDataManager.shared.fetchCurrentUser(uid: currentUserUID) {
+            CoreDataManager.shared.saveDeviceUsage(for: currentUser, result: result, deviceName: selectedDevice.name)
+            
+            // Notification yayınla
+            NotificationCenter.default.post(name: Notification.Name("DeviceUsageUpdated"), object: nil)
+        }
     }
     
     func showCalculationResult(result: DeviceUsageResult) {
-        var message = "You have used \(String(format: "%.2f", result.usage)) kWh. This will cost you $\(String(format: "%.2f", result.cost))"
-
-            // Check if there is electricity usage and cost data available
-            if let waterUsage = result.waterUsage, let waterCost = result.waterCost {
-                message += "\n\nWater used: \(String(format: "%.2f", waterUsage)) L. This will cost you $\(String(format: "%.2f", waterCost))"
+        var message = ""
+        
+        // Elektrik kullanımını ve maliyetini ekle
+            if let electricityUsage = result.electricityUsage, let electricityCost = result.electricityCost {
+                message += "Electricity used: \(String(format: "%.2f", electricityUsage)) kWh. This will cost you $\(String(format: "%.2f", electricityCost)).\n"
             }
 
-            let alertController = UIAlertController(title: "Energy Consumption", message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            alertController.addAction(okAction)
-            present(alertController, animated: true)
-    }
-    
+            // Su kullanımını ve maliyetini ekle
+            if let waterUsage = result.waterUsage, let waterCost = result.waterCost {
+                message += "\nWater used: \(String(format: "%.2f", waterUsage)) L. This will cost you $\(String(format: "%.2f", waterCost)).\n"
+            }
 
+            // Gaz kullanımını ve maliyetini ekle
+            if let gasUsage = result.gasUsage, let gasCost = result.gasCost {
+                message += "\nGas used: \(String(format: "%.2f", gasUsage)) kWh. This will cost you $\(String(format: "%.2f", gasCost)).\n"
+            }
+        // Toplam maliyeti ekle
+           message += "\nTotal cost: $\(String(format: "%.2f", result.totalCost))"
+
+           // Kullanıcıya mesajı göster
+           let alertController = UIAlertController(title: "Energy Consumption", message: message, preferredStyle: .alert)
+           let okAction = UIAlertAction(title: "OK", style: .default)
+           alertController.addAction(okAction)
+           present(alertController, animated: true)
+    }
     
     /*
      // MARK: - Navigation

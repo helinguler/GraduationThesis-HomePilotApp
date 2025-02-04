@@ -60,7 +60,13 @@ class LoginViewController: UIViewController {
                 }
                 
                 // User is signed in, transition to the HomeScreen
-                print("User signed in: \(authResult?.user.uid ?? "")")
+                guard let uid = authResult?.user.uid else { return }
+                print("User logged in with Google UID: \(uid)")
+                // AppDelegate üzerinden Core Data'ya kullanıcıyı kaydet
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.saveUserToCoreData(uid: uid)
+                }
+                //print("User signed in: \(authResult?.user.uid ?? "")")
                 self.showHomeScreen()
             }
         }
@@ -108,6 +114,13 @@ class LoginViewController: UIViewController {
                 }
 
                 // Successful login.
+                guard let uid = authResult?.user.uid else { return }
+                print("User logged in with UID: \(uid)")
+                // AppDelegate üzerinden Core Data'ya kullanıcıyı kaydet
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.saveUserToCoreData(uid: uid)
+                }
+
                 self?.showHomeScreen()
             }
     }

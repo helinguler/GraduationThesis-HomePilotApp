@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import CoreData
+import FirebaseAuth
 
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var sourceCardsCollectionView: UICollectionView!
     @IBOutlet weak var deviceCardsCollectionView: UICollectionView!
-    
     
     // Source Cards Variables
     var energyTypeLabel = ["Electricity", "Water", "Natural Gas"]
@@ -24,7 +25,6 @@ class HomeViewController: UIViewController {
     var deviceCostLabel = ["Cost: 0$", "Cost: 0$", "Cost: 0$", "Cost: 0$", "Cost: 0$", "Cost: 0$"]
     var deviceCardsImages = ["a", "b", "c", "d", "a", "a"]
     
-    
     // Adding timer to Source Cards
     var timer: Timer?
     var currentIndex = 0
@@ -32,14 +32,105 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        loadDeviceUsages()
         
         // Timer to Source Cards
         timer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(moveToNext), userInfo: nil, repeats: true)
-        
-        // Total cost güncelleme
-        NotificationCenter.default.addObserver(self, selector: #selector(updateTotalCost(_:)), name: Notification.Name("UpdateTotalCost"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDeviceUsageUpdate), name: Notification.Name("DeviceUsageUpdated"), object: nil)
     }
     
+    @objc func handleDeviceUsageUpdate() {
+        loadDeviceUsages()
+    }
+    
+    // Cihaz verilerini Core Data'dan çekmek için
+    func loadDeviceUsages() {
+        if let currentUserUID = Auth.auth().currentUser?.uid,
+           let currentUser = CoreDataManager.shared.fetchCurrentUser(uid: currentUserUID) {
+            let usages = CoreDataManager.shared.fetchDeviceUsages(for: currentUser)
+            updateSourceCards(with: usages)
+            updateDeviceCards(with: usages)
+        } else {
+            print("No current user found or no usages available.")
+        }
+    }
+
+    func updateUI(with usages: [DeviceUsage]) {
+        // Kullanıcı arayüzünü güncellemek için bu fonksiyonu doldurun.
+        for usage in usages {
+            print("Device: \(String(describing: usage.deviceName)), Cost: \(usage.totalCost), Date: \(String(describing: usage.date))")
+        }
+        
+        // Kaynak kartları güncellemesi için örnek
+            updateSourceCards(with: usages)
+    }
+    
+    // Update source cards with the usages
+    func updateSourceCards(with usages: [DeviceUsage]) {
+        var totalElectricityUsage: Double = 0.0
+        var totalElectricityCost: Double = 0.0
+        var totalWaterUsage: Double = 0.0
+        var totalWaterCost: Double = 0.0
+        var totalGasUsage: Double = 0.0
+        var totalGasCost: Double = 0.0
+
+        for usage in usages {
+            totalElectricityUsage += usage.electricityUsage
+            totalElectricityCost += usage.electricityCost
+            totalWaterUsage += usage.waterUsage
+            totalWaterCost += usage.waterCost
+            totalGasUsage += usage.gasUsage
+            totalGasCost += usage.gasCost
+        }
+
+        print("Electricity Usage: \(totalElectricityUsage), Cost: \(totalElectricityCost)")
+            print("Water Usage: \(totalWaterUsage), Cost: \(totalWaterCost)")
+            print("Gas Usage: \(totalGasUsage), Cost: \(totalGasCost)")
+        
+        sourceAmountLabel[0] = "\(String(format: "%.2f", totalElectricityUsage)) kWh"
+        totalCostLabel[0] = "Total Cost: \(String(format: "%.2f", totalElectricityCost))$"
+
+        sourceAmountLabel[1] = "\(String(format: "%.2f", totalWaterUsage)) L"
+        totalCostLabel[1] = "Total Cost: \(String(format: "%.2f", totalWaterCost))$"
+
+        sourceAmountLabel[2] = "\(String(format: "%.2f", totalGasUsage)) kWh"
+        totalCostLabel[2] = "Total Cost: \(String(format: "%.2f", totalGasCost))$"
+
+        sourceCardsCollectionView.reloadData()
+    }
+    
+    func updateDeviceCards(with usages: [DeviceUsage]) {
+        // Sabit cihaz isimleri
+        let deviceNames = ["Air Conditioning", "Washing Machine", "Combi", "Air Humidifier", "Dishwasher", "Oven"]
+
+        // Cihaz maliyetlerini saklamak için bir dictionary oluştur
+        var deviceCostDictionary: [String: Double] = [:]
+        for usage in usages {
+            let normalizedDeviceName = normalizeDeviceName(usage.deviceName ?? "Unknown Device")
+            deviceCostDictionary[normalizedDeviceName] = (deviceCostDictionary[normalizedDeviceName] ?? 0.0) + usage.totalCost
+        }
+
+        print("Device Cost Dictionary: \(deviceCostDictionary)") // Dictionary kontrolü
+
+        // Sabit sıraya göre cihaz maliyetlerini güncelle
+        deviceCostLabel = deviceNames.map { deviceName in
+            let cost = deviceCostDictionary[deviceName] ?? 0.0
+            return "Cost: \(String(format: "%.2f", cost))$"
+        }
+
+        print("Updated Device Cost Label: \(deviceCostLabel)") // Güncel maliyetleri kontrol et
+
+        // Cihaz kartlarını yeniden yükle
+        deviceCardsCollectionView.reloadData()
+    }
+
+    // her ana ekrana dönüşte Core Data'dan verilerin yeniden yüklenmesini sağlar ve UI güncellenir.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadDeviceUsages()
+    }
+
     // Moving Function for Timer
     @objc func moveToNext() {
         if currentIndex < sourceCardsImages.count - 1 {
@@ -51,6 +142,7 @@ class HomeViewController: UIViewController {
         sourceCardsCollectionView.scrollToItem(at: IndexPath(item: currentIndex, section: 0), at: .right, animated: true)
     }
     
+    /*
     // Total cost için func
     @objc func updateTotalCost(_ notification: Notification) {
         guard let userInfo = notification.userInfo as? [String: Any],
@@ -134,6 +226,7 @@ class HomeViewController: UIViewController {
         let unit = type == "Water" ? "L" : "kWh"
         return String(format: "%.2f %@", consumption, unit)
     }
+     */
 
     /*
     // MARK: - Navigation
@@ -195,6 +288,7 @@ extension HomeViewController: UICalendarViewDelegate, UICollectionViewDataSource
         return UICollectionViewCell()
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if collectionView == sourceCardsCollectionView {
@@ -223,5 +317,23 @@ extension HomeViewController: UICalendarViewDelegate, UICollectionViewDataSource
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func normalizeDeviceName(_ deviceName: String) -> String {
+            switch deviceName.lowercased() {
+            case "ac", "air conditioning":
+                return "Air Conditioning"
+            case "washer", "washing machine":
+                return "Washing Machine"
+            case "dishwasher":
+                return "Dishwasher"
+            case "combi", "boiler":
+                return "Combi"
+            case "humidifier", "air humidifier":
+                return "Air Humidifier"
+            case "oven":
+                return "Oven"
+            default:
+                return "Unknown Device"
+            }
+        }
 }
-

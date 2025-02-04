@@ -22,10 +22,15 @@ struct DeviceMetric {
 
 // Calculation Results: Standard result structure that all devices will return
 struct DeviceUsageResult {
-    let usage: Double
-    let cost: Double
-    let waterUsage: Double?  // Electricity usage (for washing machine and dishwasher )
-    let waterCost: Double?   // Electricity cost (for washing machine and dishwasher )
+    let electricityUsage: Double? // Sadece elektrik kullanan cihazlar için
+    let electricityCost: Double?
+    let waterUsage: Double?       // Sadece su kullanan cihazlar için
+    let waterCost: Double?
+    let gasUsage: Double?         // Sadece gaz kullanan cihazlar için
+    let gasCost: Double?
+    let totalCost: Double         // Cihazın toplam maliyeti
+    let usageTime: Double?        // Kullanım süresi (saat)
+    let date: Date                // Kullanım tarihi
 }
 
 // Helper Class: Common calculation and validation operations
@@ -58,34 +63,29 @@ class AC: DeviceProtocol {
         DeviceMetric(name: "Mode Type", placeholder: "Summer/Winter mode"),
         DeviceMetric(name: "Adjusted Temperature", placeholder: "Input an integer value")
     ]
-    
+
     func calculateUsage(inputs: [String: String]) -> DeviceUsageResult {
         guard let validatedInputs = CalculationHelper.validateInputs(inputs, keys: ["Usage Time", "Adjusted Temperature"]) else {
-            return DeviceUsageResult(usage: 0.0, cost: 0.0, waterUsage: nil, waterCost: nil)
+            return DeviceUsageResult(electricityUsage: nil, electricityCost: nil, waterUsage: nil, waterCost: nil, gasUsage: nil, gasCost: nil, totalCost: 0.0, usageTime: nil, date: Date())
         }
-        
+
         let usageTime = validatedInputs["Usage Time"] ?? 0.0
         let adjustedTemperature = validatedInputs["Adjusted Temperature"] ?? 0.0
         let modeType = inputs["Mode Type"]?.lowercased() ?? "summer"
         let usageHours = CalculationHelper.convertMinutesToHours(minutes: Int(usageTime))
         let costPerKWh = 0.20
-        
-        var usage: Double = 0.0
+
+        var electricityUsage: Double = 0.0
         if modeType == "summer" {
-            usage = adjustedTemperature < 24 ? 2.0 * usageHours : 1.2 * usageHours
-        } else if modeType == "winter" {
-            usage = adjustedTemperature > 22 ? 2.5 * usageHours : 1.5 * usageHours
+            electricityUsage = adjustedTemperature < 24 ? 2.0 * usageHours : 1.2 * usageHours
+        } else {
+            electricityUsage = adjustedTemperature > 22 ? 2.5 * usageHours : 1.5 * usageHours
         }
-        
-        let cost = CalculationHelper.calculateCost(usage: usage, rate: costPerKWh)
-        
-        return DeviceUsageResult(
-            usage: usage,
-            cost: cost,
-            waterUsage: nil,
-            waterCost: nil
-        )
+
+        let electricityCost = CalculationHelper.calculateCost(usage: electricityUsage, rate: costPerKWh)
+        return DeviceUsageResult(electricityUsage: electricityUsage, electricityCost: electricityCost, waterUsage: nil, waterCost: nil, gasUsage: nil, gasCost: nil, totalCost: electricityCost, usageTime: usageHours, date: Date())
     }
+
 }
 
 class WashingMachine: DeviceProtocol {
@@ -98,38 +98,51 @@ class WashingMachine: DeviceProtocol {
     
     func calculateUsage(inputs: [String: String]) -> DeviceUsageResult {
         guard let validatedInputs = CalculationHelper.validateInputs(inputs, keys: ["Usage Time"]) else {
-            return DeviceUsageResult(usage: 0.0, cost: 0.0, waterUsage: nil, waterCost: nil)
+            return DeviceUsageResult(
+                electricityUsage: nil,
+                electricityCost: nil,
+                waterUsage: nil,
+                waterCost: nil,
+                gasUsage: nil,
+                gasCost: nil,
+                totalCost: 0.0,
+                usageTime: nil,
+                date: Date()
+            )
         }
-        
+
         let usageTime = validatedInputs["Usage Time"] ?? 0.0
         let programType = inputs["Program Type"]?.lowercased() ?? "normal"
         let extraWater = inputs["Extra Water"]?.lowercased() == "yes"
         let usageHours = CalculationHelper.convertMinutesToHours(minutes: Int(usageTime))
         let costPerLiterWater = 0.005
-        let costPerKWh = 0.20  // Assuming a cost per kWh for electricity
+        let costPerKWh = 0.20
 
         var waterUsage: Double = programType == "eco" ? 30.0 * usageHours : 50.0 * usageHours
         if extraWater {
-            waterUsage += 10.0 * usageHours  // Additional water usage
+            waterUsage += 10.0 * usageHours
         }
-        
-        var electricityUsage: Double = 0.1 * usageHours  // Base electricity usage per hour
-        if programType == "eco" {
-            electricityUsage *= 0.85  // Reduced electricity usage in eco mode
-        }
-        
+
+        let electricityUsage: Double = programType == "eco" ? 0.085 * usageHours : 0.1 * usageHours
         let waterCost = CalculationHelper.calculateCost(usage: waterUsage, rate: costPerLiterWater)
         let electricityCost = CalculationHelper.calculateCost(usage: electricityUsage, rate: costPerKWh)
-        
+        let totalCost = waterCost + electricityCost
+
         return DeviceUsageResult(
-            usage: electricityUsage,  // Total water usage
-            cost: electricityCost,  // Total cost for water
-            waterUsage: waterUsage,  // Electricity usage
-            waterCost: waterCost  // Cost for electricity used
+            electricityUsage: electricityUsage,
+            electricityCost: electricityCost,
+            waterUsage: waterUsage,
+            waterCost: waterCost,
+            gasUsage: nil,
+            gasCost: nil,
+            totalCost: totalCost,
+            usageTime: usageHours,
+            date: Date()
         )
     }
-}
 
+    
+}
 
 class Combi: DeviceProtocol {
     var name: String = "Combi"
@@ -138,32 +151,27 @@ class Combi: DeviceProtocol {
         DeviceMetric(name: "Adjusted Temperature", placeholder: "Input an integer value"),
         DeviceMetric(name: "Number of Radiators", placeholder: "Input an integer value")
     ]
-    
+
     func calculateUsage(inputs: [String: String]) -> DeviceUsageResult {
         guard let usageTime = Double(inputs["Usage Time"] ?? "0"),
               let adjustedTemperature = Int(inputs["Adjusted Temperature"] ?? "0"),
               let numberOfRadiators = Int(inputs["Number of Radiators"] ?? "0") else {
-            return DeviceUsageResult(usage: 0.0, cost: 0.0, waterUsage: nil, waterCost: nil)
+            return DeviceUsageResult(electricityUsage: nil, electricityCost: nil, waterUsage: nil, waterCost: nil, gasUsage: nil, gasCost: nil, totalCost: 0.0, usageTime: nil, date: Date())
         }
 
         let costPerKWh = 0.15
         var kWhPerHour = 1.5
-        
         if adjustedTemperature > 30 {
             kWhPerHour += Double(adjustedTemperature - 30) * 0.2
         }
         kWhPerHour += Double(numberOfRadiators) * 0.1
 
-        let usage = kWhPerHour * usageTime
-        let cost = CalculationHelper.calculateCost(usage: usage, rate: costPerKWh)
-        
-        return DeviceUsageResult(
-            usage: usage,
-            cost: cost,
-            waterUsage: nil,
-            waterCost: nil
-        )
+        let gasUsage = kWhPerHour * usageTime
+        let gasCost = CalculationHelper.calculateCost(usage: gasUsage, rate: costPerKWh)
+
+        return DeviceUsageResult(electricityUsage: nil, electricityCost: nil, waterUsage: nil, waterCost: nil, gasUsage: gasUsage, gasCost: gasCost, totalCost: gasCost, usageTime: usageTime, date: Date())
     }
+
 }
 
 class AirHumidifier: DeviceProtocol {
@@ -176,7 +184,7 @@ class AirHumidifier: DeviceProtocol {
     
     func calculateUsage(inputs: [String: String]) -> DeviceUsageResult {
         guard let usageTime = Int(inputs["Usage Time"] ?? "0") else {
-            return DeviceUsageResult(usage: 0.0, cost: 0.0, waterUsage: nil, waterCost: nil)
+            return DeviceUsageResult(electricityUsage: nil, electricityCost: nil, waterUsage: nil, waterCost: nil, gasUsage: nil, gasCost: nil, totalCost: 0.0, usageTime: nil, date: Date())
         }
 
         let fanSpeed = inputs["Fan Speed"]?.lowercased() ?? "low"
@@ -184,29 +192,20 @@ class AirHumidifier: DeviceProtocol {
         let costPerKWh = 0.18
         let usageHours = CalculationHelper.convertMinutesToHours(minutes: usageTime)
 
-        var kWhPerHour = 0.5  // Default for low fan speed
+        var electricityUsage: Double = 0.5
         switch fanSpeed {
-        case "medium":
-            kWhPerHour = 0.8
-        case "high":
-            kWhPerHour = 1.2
-        default:
-            break
+        case "medium": electricityUsage = 0.8
+        case "high": electricityUsage = 1.2
+        default: break
         }
         if pollenFilterCleaning {
-            kWhPerHour += 0.3
+            electricityUsage += 0.3
         }
 
-        let usage = kWhPerHour * usageHours
-        let cost = CalculationHelper.calculateCost(usage: usage, rate: costPerKWh)
-        
-        return DeviceUsageResult(
-            usage: usage,
-            cost: cost,
-            waterUsage: nil,
-            waterCost: nil
-        )
+        let electricityCost = CalculationHelper.calculateCost(usage: electricityUsage, rate: costPerKWh)
+        return DeviceUsageResult(electricityUsage: electricityUsage, electricityCost: electricityCost, waterUsage: nil, waterCost: nil, gasUsage: nil, gasCost: nil, totalCost: electricityCost, usageTime: usageHours, date: Date())
     }
+
 }
 
 class Dishwasher: DeviceProtocol {
@@ -216,39 +215,32 @@ class Dishwasher: DeviceProtocol {
         DeviceMetric(name: "Program Type", placeholder: "Eco/Normal"),
         DeviceMetric(name: "Extra Water", placeholder: "Yes/No")
     ]
-    
+
     func calculateUsage(inputs: [String: String]) -> DeviceUsageResult {
         guard let validatedInputs = CalculationHelper.validateInputs(inputs, keys: ["Usage Time"]) else {
-            return DeviceUsageResult(usage: 0.0, cost: 0.0, waterUsage: nil, waterCost: nil)
+            return DeviceUsageResult(electricityUsage: nil, electricityCost: nil, waterUsage: nil, waterCost: nil, gasUsage: nil, gasCost: nil, totalCost: 0.0, usageTime: nil, date: Date())
         }
-        
+
         let usageTime = validatedInputs["Usage Time"] ?? 0.0
         let programType = inputs["Program Type"]?.lowercased() ?? "normal"
         let extraWater = inputs["Extra Water"]?.lowercased() == "yes"
         let usageHours = CalculationHelper.convertMinutesToHours(minutes: Int(usageTime))
         let costPerLiterWater = 0.005
-        let costPerKWh = 0.20  // Assuming a cost per kWh for electricity
+        let costPerKWh = 0.20
 
         var waterUsage: Double = programType == "eco" ? 30.0 * usageHours : 50.0 * usageHours
         if extraWater {
-            waterUsage += 10.0 * usageHours  // Additional water usage
+            waterUsage += 10.0 * usageHours
         }
-        
-        var electricityUsage: Double = 0.1 * usageHours  // Base electricity usage per hour
-        if programType == "eco" {
-            electricityUsage *= 0.85  // Reduced electricity usage in eco mode
-        }
-        
+
+        let electricityUsage: Double = programType == "eco" ? 0.085 * usageHours : 0.1 * usageHours
         let waterCost = CalculationHelper.calculateCost(usage: waterUsage, rate: costPerLiterWater)
         let electricityCost = CalculationHelper.calculateCost(usage: electricityUsage, rate: costPerKWh)
-        
-        return DeviceUsageResult(
-            usage: electricityUsage,  // Total water usage
-            cost: electricityCost,  // Total cost for water
-            waterUsage: waterUsage,  // Electricity usage
-            waterCost: waterCost  // Cost for electricity used
-        )
+        let totalCost = waterCost + electricityCost
+
+        return DeviceUsageResult(electricityUsage: electricityUsage, electricityCost: electricityCost, waterUsage: waterUsage, waterCost: waterCost, gasUsage: nil, gasCost: nil, totalCost: totalCost, usageTime: usageHours, date: Date())
     }
+
 }
 
 class Oven: DeviceProtocol {
@@ -260,36 +252,54 @@ class Oven: DeviceProtocol {
     ]
     
     func calculateUsage(inputs: [String: String]) -> DeviceUsageResult {
-        guard let usageTime = Int(inputs["Usage Time"] ?? "0"),
-              let adjustedTemperature = Int(inputs["Adjusted Temperature"] ?? "0") else {
-            return DeviceUsageResult(usage: 0.0, cost: 0.0, waterUsage: nil, waterCost: nil)
+        guard let usageTime = Double(inputs["Usage Time"] ?? "0"),
+              let adjustedTemperature = Double(inputs["Adjusted Temperature"] ?? "0"),
+              let fanSpeed = inputs["Fan Speed"]?.lowercased() else {
+            return DeviceUsageResult(
+                electricityUsage: nil,
+                electricityCost: nil,
+                waterUsage: nil,
+                waterCost: nil,
+                gasUsage: nil,
+                gasCost: nil,
+                totalCost: 0.0,
+                usageTime: nil,
+                date: Date()
+            )
         }
 
-        let fanSpeed = inputs["Fan Speed"]?.lowercased() ?? "low"
         let costPerUnitGas = 0.10
-        let usageHours = CalculationHelper.convertMinutesToHours(minutes: usageTime)
+        let usageHours = CalculationHelper.convertMinutesToHours(minutes: Int(usageTime))
 
-        var gasPerHour = 1.0  // Default base gas consumption
+        // Gaz tüketimini hesapla
+        var gasUsage: Double = 1.0 // Baz gaz tüketimi
         if adjustedTemperature > 120 {
-            gasPerHour += Double(adjustedTemperature - 120) * 0.05
+            gasUsage += (adjustedTemperature - 120) * 0.05
         }
+
         switch fanSpeed {
         case "medium":
-            gasPerHour += 0.2
+            gasUsage += 0.2
         case "high":
-            gasPerHour += 0.4
+            gasUsage += 0.4
         default:
             break
         }
 
-        let usage = gasPerHour * usageHours
-        let cost = CalculationHelper.calculateCost(usage: usage, rate: costPerUnitGas)
-        
+        // Toplam maliyet hesapla
+        let gasCost = CalculationHelper.calculateCost(usage: gasUsage * usageHours, rate: costPerUnitGas)
+        let totalCost = gasCost
+
         return DeviceUsageResult(
-            usage: usage,
-            cost: cost,
+            electricityUsage: nil,
+            electricityCost: nil,
             waterUsage: nil,
-            waterCost: nil
+            waterCost: nil,
+            gasUsage: gasUsage * usageHours,
+            gasCost: gasCost,
+            totalCost: totalCost,
+            usageTime: usageHours,
+            date: Date()
         )
     }
 }
