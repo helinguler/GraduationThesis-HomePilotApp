@@ -70,7 +70,7 @@ class DeviceViewController: UIViewController {
         if let currentUserUID = Auth.auth().currentUser?.uid,
             let currentUser = CoreDataManager.shared.fetchCurrentUser(uid: currentUserUID) {
             CoreDataManager.shared.saveDeviceUsage(for: currentUser, result: result, deviceName: selectedDevice.name)
-            
+            print("Saved Device Usage: \(result)") // Burada kaydedilen veriyi kontrol et
             // Notification yayınla
             NotificationCenter.default.post(name: Notification.Name("DeviceUsageUpdated"), object: nil)
         }

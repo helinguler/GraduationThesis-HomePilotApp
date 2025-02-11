@@ -79,7 +79,27 @@ class CoreDataManager {
         }
     }
 
+    
     func fetchDeviceUsages(for user: User) -> [DeviceUsage] {
         return user.deviceUsage?.allObjects as? [DeviceUsage] ?? []
     }
+     
+    
+    // Belirli Tarih Aralığında(Haftalık veya Aylık) Kullanıcı Verilerini Getirme
+        func fetchDeviceUsages(for user: User, from startDate: Date, to endDate: Date) -> [DeviceUsage] {
+            let request: NSFetchRequest<DeviceUsage> = DeviceUsage.fetchRequest()
+                request.predicate = NSPredicate(format: "user == %@ AND date >= %@ AND date <= %@", user, startDate as NSDate, endDate as NSDate)
+                
+                do {
+                    let results = try context.fetch(request)
+                    for result in results {
+                        print("Fetched Device Usage - Date: \(String(describing: result.date)), Device: \(String(describing: result.deviceName))")
+                    }
+                    return results
+                } catch {
+                    print("Error fetching device usages: \(error.localizedDescription)")
+                    return []
+                }
+        }
+    
 }
