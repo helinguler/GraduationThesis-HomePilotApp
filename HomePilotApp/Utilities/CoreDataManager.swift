@@ -9,10 +9,11 @@ import CoreData
 import UIKit
 
 class CoreDataManager {
+    // Singleton olarak tanımlama
     static let shared = CoreDataManager()
     private init() {}
 
-    // Persistent Container
+    // CoreData veritabanının yönetildiği ana yapı
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "HomePilotApp")
         container.loadPersistentStores { (storeDescription, error) in

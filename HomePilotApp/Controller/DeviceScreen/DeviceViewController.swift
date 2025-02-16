@@ -52,7 +52,8 @@ class DeviceViewController: UIViewController {
         }
     }
     
-    @IBAction func calculateButtonTapped(_ sender: Any) {let selectedDevice = devices[selectedDeviceIndex]
+    @IBAction func calculateButtonTapped(_ sender: Any) {
+        let selectedDevice = devices[selectedDeviceIndex]
         var inputs: [String: String] = [:]
 
         for (index, metricView) in metricContainer.arrangedSubviews.enumerated() {

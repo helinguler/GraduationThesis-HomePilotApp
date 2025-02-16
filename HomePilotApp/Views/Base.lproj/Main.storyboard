@@ -66,8 +66,8 @@
                                                 </subviews>
                                             </stackView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2fT-Lg-DPp">
-                                                <rect key="frame" x="0.0" y="88.666666666666686" width="393" height="200"/>
-                                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                <rect key="frame" x="10" y="88.666666666666686" width="373" height="200"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="200" id="t7t-BT-Tdk"/>
                                                 </constraints>
@@ -97,7 +97,6 @@
                                                                                 <constraint firstAttribute="height" constant="20" id="Hpv-HX-UPA"/>
                                                                             </constraints>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                            <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 kW" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="peY-9x-pz2">
@@ -106,7 +105,6 @@
                                                                                 <constraint firstAttribute="height" constant="24" id="shC-7y-WNM"/>
                                                                             </constraints>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                                                            <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Cost: 0$" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fVE-BQ-LUG">
@@ -115,7 +113,6 @@
                                                                                 <constraint firstAttribute="height" constant="20" id="Ba7-46-zte"/>
                                                                             </constraints>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                            <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                     </subviews>
@@ -132,7 +129,7 @@
                                                                 <constraint firstAttribute="trailing" secondItem="2MC-1x-seH" secondAttribute="trailing" constant="8" id="ylV-EN-W9n"/>
                                                             </constraints>
                                                         </collectionViewCellContentView>
-                                                        <color key="backgroundColor" red="0.59607843137254901" green="0.75686274509803919" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" red="0.80000000000000004" green="0.90196078430000004" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <size key="customSize" width="393" height="203"/>
                                                         <connections>
                                                             <outlet property="energyTypeLabel" destination="wCE-bF-mlN" id="N2h-Qj-dmz"/>
@@ -155,7 +152,7 @@
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="TmX-vT-WRE" userLabel="Device Cards Collection View">
                                                 <rect key="frame" x="20" y="352.66666666666674" width="353" height="370"/>
-                                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="370" id="HLM-f4-mZh"/>
                                                 </constraints>
@@ -232,7 +229,7 @@
                                                 </connections>
                                             </collectionView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="TmX-vT-WRE" secondAttribute="bottom" id="53J-TN-KUg"/>
                                             <constraint firstAttribute="trailing" secondItem="TmX-vT-WRE" secondAttribute="trailing" constant="20" id="8IC-8d-nMw"/>
@@ -243,10 +240,10 @@
                                             <constraint firstItem="noN-Vd-dDU" firstAttribute="leading" secondItem="gC4-ek-tsL" secondAttribute="leading" constant="20" id="XXG-9I-jrp"/>
                                             <constraint firstItem="pHT-mL-Ipt" firstAttribute="leading" secondItem="gC4-ek-tsL" secondAttribute="leading" constant="20" id="YpF-I0-iYs"/>
                                             <constraint firstAttribute="trailing" secondItem="iBR-Xr-YLO" secondAttribute="trailing" constant="20" id="aG3-JV-x8G"/>
-                                            <constraint firstItem="2fT-Lg-DPp" firstAttribute="leading" secondItem="gC4-ek-tsL" secondAttribute="leading" id="c5I-J8-BCd"/>
+                                            <constraint firstItem="2fT-Lg-DPp" firstAttribute="leading" secondItem="gC4-ek-tsL" secondAttribute="leading" constant="10" id="c5I-J8-BCd"/>
                                             <constraint firstItem="2fT-Lg-DPp" firstAttribute="top" secondItem="pHT-mL-Ipt" secondAttribute="bottom" constant="5" id="caI-C6-xIk"/>
                                             <constraint firstItem="iBR-Xr-YLO" firstAttribute="top" secondItem="gC4-ek-tsL" secondAttribute="top" id="d1x-HO-1J0"/>
-                                            <constraint firstAttribute="trailing" secondItem="2fT-Lg-DPp" secondAttribute="trailing" id="i7X-f1-4gn"/>
+                                            <constraint firstAttribute="trailing" secondItem="2fT-Lg-DPp" secondAttribute="trailing" constant="10" id="i7X-f1-4gn"/>
                                             <constraint firstAttribute="trailing" secondItem="noN-Vd-dDU" secondAttribute="trailing" constant="20" id="jg7-8Y-Ud3"/>
                                             <constraint firstItem="TmX-vT-WRE" firstAttribute="leading" secondItem="gC4-ek-tsL" secondAttribute="leading" constant="20" id="suI-D2-8Ws"/>
                                             <constraint firstItem="TmX-vT-WRE" firstAttribute="top" secondItem="noN-Vd-dDU" secondAttribute="bottom" constant="10" id="v1N-Ae-dlx"/>
@@ -264,7 +261,7 @@
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3sU-01-f1I" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="a6B-Tf-lzL"/>
                             <constraint firstItem="3sU-01-f1I" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fVF-Jd-wFC"/>
@@ -320,7 +317,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="energy-consumption" translatesAutoresizingMaskIntoConstraints="NO" id="i3y-lQ-c3V">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home2" translatesAutoresizingMaskIntoConstraints="NO" id="i3y-lQ-c3V">
                                 <rect key="frame" x="52" y="64" width="289" height="128"/>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Adress" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rwp-e0-0Ho">
@@ -463,11 +460,11 @@
             </objects>
             <point key="canvasLocation" x="42" y="-838"/>
         </scene>
-        <!--Item-->
+        <!--Charts-->
         <scene sceneID="FEz-Pv-4Od">
             <objects>
                 <navigationController id="vZ9-Lo-pXy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="48W-yM-zVx"/>
+                    <tabBarItem key="tabBarItem" title="Charts" image="chart.bar.fill" catalog="system" id="48W-yM-zVx"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="a6r-7I-JiD">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -572,8 +569,8 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Efj-v6-pdZ" userLabel="Third Chart Stack View">
                                                         <rect key="frame" x="0.0" y="700" width="353" height="300"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Consumption of Devices" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TeS-Qa-Icp">
-                                                                <rect key="frame" x="62.000000000000014" y="0.0" width="229.33333333333337" height="24"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Consumption of Devices in kWh" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TeS-Qa-Icp">
+                                                                <rect key="frame" x="28" y="0.0" width="297.33333333333331" height="24"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -608,8 +605,8 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jJl-ps-fIE" userLabel="Fourth Chart Stack View">
                                                         <rect key="frame" x="0.0" y="1050" width="353" height="300"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Consumption of Sources" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZIZ-UE-HKf">
-                                                                <rect key="frame" x="60.666666666666686" y="0.0" width="232" height="24"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Consumption of Sources in kWh" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZIZ-UE-HKf">
+                                                                <rect key="frame" x="26.666666666666657" y="0.0" width="300" height="24"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -644,8 +641,8 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="d52-bT-KLD" userLabel="Fifth Chart Stack View">
                                                         <rect key="frame" x="0.0" y="1400" width="353" height="300"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Combined" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3f-Uc-93n">
-                                                                <rect key="frame" x="128" y="0.0" width="97" height="24"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Combined Cost and Consumption" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3f-Uc-93n">
+                                                                <rect key="frame" x="18.666666666666657" y="0.0" width="316" height="24"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -958,11 +955,11 @@
             </objects>
             <point key="canvasLocation" x="3337" y="3"/>
         </scene>
-        <!--Item-->
+        <!--Home-->
         <scene sceneID="Qbp-u2-jUa">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wau-5a-uSm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="e81-Fy-CIN"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="bolt.house.fill" catalog="system" id="e81-Fy-CIN"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6X1-IY-oRo">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -983,8 +980,10 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.right.circle" catalog="system" width="128" height="123"/>
-        <image name="energy-consumption" width="128" height="128"/>
+        <image name="bolt.house.fill" catalog="system" width="128" height="104"/>
+        <image name="chart.bar.fill" catalog="system" width="128" height="90"/>
         <image name="gearshape.fill" catalog="system" width="128" height="123"/>
+        <image name="home2" width="128" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

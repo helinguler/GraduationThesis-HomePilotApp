@@ -23,7 +23,7 @@ class HomeViewController: UIViewController {
     // Device Cards Variables
     var deviceNameLabel = ["Air Conditioning", "Washing Machine", "Combi", "Air Humidifier", "Dishwasher", "Oven"]
     var deviceCostLabel = ["Cost: 0$", "Cost: 0$", "Cost: 0$", "Cost: 0$", "Cost: 0$", "Cost: 0$"]
-    var deviceCardsImages = ["a", "b", "c", "d", "a", "a"]
+    var deviceCardsImages = ["a", "b", "c", "d", "e", "f"]
     
     // Adding timer to Source Cards
     var timer: Timer?
@@ -141,92 +141,6 @@ class HomeViewController: UIViewController {
         }
         sourceCardsCollectionView.scrollToItem(at: IndexPath(item: currentIndex, section: 0), at: .right, animated: true)
     }
-    
-    /*
-    // Total cost için func
-    @objc func updateTotalCost(_ notification: Notification) {
-        guard let userInfo = notification.userInfo as? [String: Any],
-                  let deviceName = userInfo["deviceName"] as? String,
-                  let cost = userInfo["cost"] as? Double,
-                  let waterCost = userInfo["waterCost"] as? Double,
-                  let index = userInfo["index"] as? Int else {
-                return
-            }
-            
-            // Cihaz Kartı Maliyetini Güncelle
-        /*
-            deviceCostLabel[index] = "Cost: \(cost)$"
-            deviceCardsCollectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-         */
-        // Cihaz maliyetini güncelle
-        let currentCostText = deviceCostLabel[index]
-        let currentCost = Double(currentCostText.components(separatedBy: " ")[1].dropLast()) ?? 0
-        let updatedCost = currentCost + cost + waterCost // Bu satırda newCost yerine cost kullanılmalı
-        deviceCostLabel[index] = formatCost(updatedCost)  // Maliyeti formatlı şekilde güncelle
-            deviceCardsCollectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-
-
-            // Cihaza bağlı olarak kaynak kartını güncelle
-            switch deviceName {
-            case "Washer", "Dishwasher":
-                let waterCost = userInfo["waterCost"] as? Double ?? 0
-                let waterUsage = userInfo["waterUsage"] as? Double ?? 0
-                let electricityCost = cost
-                let electricityUsage = userInfo["electricityUsage"] as? Double ?? 0
-                updateSourceCard(type: "Water", newCost: waterCost, newConsumption: waterUsage)
-                updateSourceCard(type: "Electricity", newCost: electricityCost, newConsumption: electricityUsage)
-            case "AC", "Air Humidifier":
-                let electricityUsage = userInfo["electricityUsage"] as? Double ?? 0
-                updateSourceCard(type: "Electricity", newCost: cost, newConsumption: electricityUsage)
-            case "Combi", "Oven":
-                let gasUsage = userInfo["electricityUsage"] as? Double ?? 0  // Bu gaz kullanımı olmalı
-                updateSourceCard(type: "Natural Gas", newCost: cost, newConsumption: gasUsage)
-            default: break
-            }
-    }
-    
-    func updateSourceCard(type: String, newCost: Double, newConsumption: Double) {
-        if let index = energyTypeLabel.firstIndex(of: type) {
-                // Maliyeti güncelle
-                let currentCostText = totalCostLabel[index]
-                let currentCost = Double(currentCostText.components(separatedBy: " ")[2].dropLast()) ?? 0
-                let updatedCost = currentCost + newCost
-                totalCostLabel[index] = formatTotalCost(updatedCost)  // Formatlı maliyet metni
-
-                // Tüketimi güncelle
-                let currentConsumptionText = sourceAmountLabel[index]
-                let currentConsumption = Double(currentConsumptionText.components(separatedBy: " ")[0]) ?? 0
-                let updatedConsumption = currentConsumption + newConsumption
-                sourceAmountLabel[index] = formatConsumption(updatedConsumption, for: type)
-                
-                // Belirli kartı yeniden yükle
-                sourceCardsCollectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-            }
-    }
-    
-    func updateTotalCostLabel(newCost: Double) {
-        // Mevcut toplam maliyeti güncellemek için label'ı düzenle
-        if let totalCostLabel = sourceCardsCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? SourceCardsCollectionViewCell {
-            let currentCostText = totalCostLabel.totalCostLabel.text ?? "Total Cost: 0$"
-            let currentCost = Double(currentCostText.components(separatedBy: ":")[1].trimmingCharacters(in: .whitespacesAndNewlines).dropLast()) ?? 0.0
-            let updatedCost = currentCost + newCost
-            totalCostLabel.totalCostLabel.text = "Total Cost: \(String(format: "%.2f", updatedCost))$"
-        }
-    }
-    
-    func formatCost(_ cost: Double) -> String {
-        return String(format: "Cost: %.2f$", cost)
-    }
-
-    func formatTotalCost(_ cost: Double) -> String {
-        return String(format: "Total Cost: %.2f$", cost)
-    }
-    
-    func formatConsumption(_ consumption: Double, for type: String) -> String {
-        let unit = type == "Water" ? "L" : "kWh"
-        return String(format: "%.2f %@", consumption, unit)
-    }
-     */
 
     /*
     // MARK: - Navigation

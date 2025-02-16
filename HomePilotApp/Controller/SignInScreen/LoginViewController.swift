@@ -81,15 +81,7 @@ class LoginViewController: UIViewController {
     
     func showHomeScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        /*
-        let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        let navigationController = UINavigationController(rootViewController: homeViewController)
-        
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = windowScene.windows.first {
-                window.rootViewController = navigationController
-                window.makeKeyAndVisible()
-            }
-        */
+
         // UITabBarController'ı oluştur ve içindeki viewController'ları ekle
             let tabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController") as! UITabBarController
             

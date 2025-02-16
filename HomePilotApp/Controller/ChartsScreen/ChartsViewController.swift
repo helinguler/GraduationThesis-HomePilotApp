@@ -13,6 +13,16 @@ import CoreData
 
 class ChartsViewController: UIViewController, ChartViewDelegate {
     
+    // UIView'a Card stili ekleme
+    func applyCardStyle(to view: UIView) {
+        view.layer.cornerRadius = 16  // 📌 Kenarları yuvarlat
+        view.layer.shadowColor = UIColor.black.cgColor  // 📌 Gölge rengi
+        view.layer.shadowOpacity = 0.15  // 📌 Gölge yoğunluğu (0-1)
+        view.layer.shadowOffset = CGSize(width: 0, height: 4)  // 📌 Gölge konumu (yukarı/aşağı)
+        view.layer.shadowRadius = 8  // 📌 Gölge yayılma miktarı
+        view.backgroundColor = UIColor.white  // 📌 Arka plan rengi
+    }
+    
     @IBOutlet weak var chart1View: BarChartView!
     @IBOutlet weak var chart1SegmentedControl: UISegmentedControl!
         
@@ -46,6 +56,13 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         chart3View.delegate = self
         chart4View.delegate = self
         chart5View.delegate = self
+        
+        // 📌 Yalnızca UI'ya gölge ve derinlik efekti ekleyelim
+           applyCardStyle(to: chart1View)
+           applyCardStyle(to: chart2View)
+           applyCardStyle(to: chart3View)
+           applyCardStyle(to: chart4View)
+           applyCardStyle(to: chart5View)
     }
 
     // SegmentedControl değiştirme
@@ -128,16 +145,7 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
 
         let data = BarChartData(dataSet: dataSet)
         chart1View.data = data
-        /*
-           chart1View.xAxis.valueFormatter = IndexAxisValueFormatter(values: deviceNames)
-           chart1View.xAxis.labelPosition = .bottom // X ekseni etiketlerini altta göster
-           //chart1View.xAxis.drawGridLinesEnabled = false // X ekseni ızgaralarını kapat
-           //chart1View.leftAxis.drawGridLinesEnabled = false // Sol Y ekseni ızgaralarını kapat
-           chart1View.rightAxis.enabled = false
-           chart1View.xAxis.granularity = 1
-           chart1View.animate(yAxisDuration: 1.0) // Animasyon ekleme
-           chart1View.noDataText = "No data available"
-         */
+
         let xAxis = chart1View.xAxis
         xAxis.drawGridLinesEnabled = false
         xAxis.drawAxisLineEnabled = false
@@ -147,8 +155,8 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
 
         let leftAxis = chart1View.leftAxis
         leftAxis.drawGridLinesEnabled = false
-        leftAxis.drawAxisLineEnabled = false
-        leftAxis.drawLabelsEnabled = false
+        leftAxis.drawAxisLineEnabled = true
+        leftAxis.drawLabelsEnabled = true
 
         let rightAxis = chart1View.rightAxis
         rightAxis.drawGridLinesEnabled = false
@@ -299,13 +307,7 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
 
         let data = LineChartData(dataSet: dataSet)
         chart3View.data = data
-        /*
-            chart3View.xAxis.valueFormatter = IndexAxisValueFormatter(values: deviceNames)
-            chart3View.notifyDataSetChanged()
-            chart3View.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
-            chart3View.xAxis.labelPosition = .bottom
-            chart3View.xAxis.granularity = 1.0
-         */
+
         // X Ekseni Ayarları
         let xAxis = chart3View.xAxis
         xAxis.drawGridLinesEnabled = false  // 📌 Izgara çizgilerini kaldır
@@ -319,8 +321,8 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         // Y Ekseni Ayarları
         let leftAxis = chart3View.leftAxis
         leftAxis.drawGridLinesEnabled = false
-        leftAxis.drawAxisLineEnabled = false
-        leftAxis.drawLabelsEnabled = false
+        leftAxis.drawAxisLineEnabled = true
+        leftAxis.drawLabelsEnabled = true
 
         let rightAxis = chart3View.rightAxis
         rightAxis.drawGridLinesEnabled = false
@@ -374,8 +376,8 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
             // 📌 Y Ekseni Ayarları (Değişiklik yok)
             let leftAxis = chart4View.leftAxis
             leftAxis.drawGridLinesEnabled = false
-            leftAxis.drawAxisLineEnabled = false
-            leftAxis.drawLabelsEnabled = false
+            leftAxis.drawAxisLineEnabled = true
+            leftAxis.drawLabelsEnabled = true
 
             let rightAxis = chart4View.rightAxis
             rightAxis.drawGridLinesEnabled = false
@@ -408,24 +410,6 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
             costEntries.append(BarChartDataEntry(x: Double(index), y: totalCost))
             consumptionEntries.append(ChartDataEntry(x: Double(index), y: totalConsumption))
         }
-        
-        /*
-        let costDataSet = BarChartDataSet(entries: costEntries, label: "Cost ($)")
-        let consumptionDataSet = LineChartDataSet(entries: consumptionEntries, label: "Consumption (kWh)")
-        
-        costDataSet.colors = [NSUIColor.red]
-        consumptionDataSet.colors = [NSUIColor.blue]
-        
-        let data = CombinedChartData()
-        data.barData = BarChartData(dataSet: costDataSet)
-        data.lineData = LineChartData(dataSet: consumptionDataSet)
-        
-        chart5View.data = data
-        chart5View.xAxis.valueFormatter = IndexAxisValueFormatter(values: deviceNames)
-        chart5View.animate(xAxisDuration: 1.5, yAxisDuration: 1.5)
-        chart5View.xAxis.labelPosition = .bottom // Etiket konumunu alt tarafa ayarla
-        chart5View.xAxis.granularity = 1.0 // Her bir değer için bir etiket
-         */
         
         // Bar Dataset (Maliyet)
         let costDataSet = BarChartDataSet(entries: costEntries, label: "Cost ($)")
@@ -460,8 +444,8 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         // Y Ekseni Ayarları (Gizle)
         let leftAxis = chart5View.leftAxis
         leftAxis.drawGridLinesEnabled = false
-        leftAxis.drawAxisLineEnabled = false
-        leftAxis.drawLabelsEnabled = false
+        leftAxis.drawAxisLineEnabled = true
+        leftAxis.drawLabelsEnabled = true
 
         let rightAxis = chart5View.rightAxis
         rightAxis.drawGridLinesEnabled = false
