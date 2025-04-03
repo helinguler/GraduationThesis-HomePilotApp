@@ -38,6 +38,16 @@ This project presents an iOS application that tracks and analyzes energy usage b
 
 ---
 
+## 📚 Technologies Used
+
+- Swift, UIKit
+- Core Data
+- Firebase Authentication + Google Sign-In
+- Swift Charts
+- MVC Design Pattern
+
+---
+
 ## 🗂️ Project Structure
 ```bash
 HomePilotApp/
@@ -86,16 +96,6 @@ open HomePilotApp.xcodeproj
 3. Check package dependencies and build the project:
 Firebase  
 Swift Charts
-
----
-
-## 📚 Technologies Used
-
-- Swift, UIKit
-- Core Data
-- Firebase Authentication + Google Sign-In
-- Swift Charts
-- MVC Design Pattern
 
 ---
 
