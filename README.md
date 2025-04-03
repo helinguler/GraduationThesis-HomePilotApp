@@ -10,12 +10,12 @@ This project presents an iOS application that tracks and analyzes energy usage b
 ### Home Screen
 <img width="361" alt="Ekran Resmi 2025-04-03 20 22 53" src="https://github.com/user-attachments/assets/02201313-f863-479e-bfb6-9d82295bace0" />
 
+### Charts Screen
+<img width="208" alt="Ekran Resmi 2025-04-03 20 50 25" src="https://github.com/user-attachments/assets/9e0da768-725f-45fe-b6bf-c0d3318205cc" />
+<img width="424" alt="Ekran Resmi 2025-04-03 20 50 51" src="https://github.com/user-attachments/assets/1c223ea8-0536-4839-a1f2-78646638ac3f" />
+
 ### Device Screen
 <img width="775" alt="Ekran Resmi 2025-04-03 20 46 28" src="https://github.com/user-attachments/assets/bc640637-83d3-4f58-9dc8-09e1e3aa09f9" />
-
-### Charts Screen
-<img width="241" alt="Ekran Resmi 2025-04-03 20 26 59" src="https://github.com/user-attachments/assets/511f8290-6ac3-43de-9738-9d3e0a79ef2e" />
-<img width="501" alt="Ekran Resmi 2025-04-03 20 27 10" src="https://github.com/user-attachments/assets/1b590cf9-9e5e-47fe-b30e-906cf9093ceb" />
 
 📄 [Click here to access the full thesis and get detailed information about the project.](https://drive.google.com/file/d/1e5l1uUiDTU2wsMvCk38ygnz_gWE_ctCk/view?usp=sharing)
 
