@@ -3,23 +3,21 @@ A Mobile Application in Swift for Energy Consumption Tracking
 
 This project presents an iOS application that tracks and analyzes energy usage by dividing different home devices into three main areas. These are electricity, water, and natural gas. Home Pilot App built with **Swift + UIKit**, powered by **Firebase Authentication**, **Core Data** and **Swift Charts**.
 
-<p align="center">
-  <img src="https://github.com/helinguler/GraduationThesis-HomePilotApp/raw/main/images/logo.png" alt="Home Pilot Logo" width="200"/>
-</p>
-
 ---
 
 ## 📸 Screenshots
 
-| Home Screen |
+### Home Screen
 <img width="361" alt="Ekran Resmi 2025-04-03 20 22 53" src="https://github.com/user-attachments/assets/02201313-f863-479e-bfb6-9d82295bace0" />
 
-| Device Screen |
-<img width="837" alt="Ekran Resmi 2025-04-03 20 26 18" src="https://github.com/user-attachments/assets/9e62378a-e0de-41c9-99ab-f940318c67d7" />
+### Device Screen
+<img width="775" alt="Ekran Resmi 2025-04-03 20 46 28" src="https://github.com/user-attachments/assets/bc640637-83d3-4f58-9dc8-09e1e3aa09f9" />
 
-| Charts Screen |
+### Charts Screen
 <img width="241" alt="Ekran Resmi 2025-04-03 20 26 59" src="https://github.com/user-attachments/assets/511f8290-6ac3-43de-9738-9d3e0a79ef2e" />
 <img width="501" alt="Ekran Resmi 2025-04-03 20 27 10" src="https://github.com/user-attachments/assets/1b590cf9-9e5e-47fe-b30e-906cf9093ceb" />
+
+📄 [Click here to access the full thesis and get detailed information about the project.](https://drive.google.com/file/d/1e5l1uUiDTU2wsMvCk38ygnz_gWE_ctCk/view?usp=sharing)
 
 ---
 
@@ -54,17 +52,17 @@ Swift Charts
 
 ---
 
-📚 Technologies Used
+## 📚 Technologies Used
 
-Swift, UIKit
-Core Data
-Firebase Authentication + Google Sign-In
-Swift Charts
-MVC Design Pattern
+- Swift, UIKit
+- Core Data
+- Firebase Authentication + Google Sign-In
+- Swift Charts
+- MVC Design Pattern
 
 ---
 
-👩🏻‍💻 Developer
+## 👩🏻‍💻 Developer
 
 **Helin Güler**  
 [LinkedIn Profilim](https://www.linkedin.com/in/helin-guler)  
