@@ -17,6 +17,7 @@ This project presents an iOS application that tracks and analyzes energy usage b
 ### Device Screen
 <img width="775" alt="Ekran Resmi 2025-04-03 20 46 28" src="https://github.com/user-attachments/assets/bc640637-83d3-4f58-9dc8-09e1e3aa09f9" />
 
+
 📄 [Click here to access the full thesis and get detailed information about the project.](https://drive.google.com/file/d/1e5l1uUiDTU2wsMvCk38ygnz_gWE_ctCk/view?usp=sharing)
 
 ---
