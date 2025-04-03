@@ -1,4 +1,4 @@
-# Home Pilot App for Graduation Thesis aaaaa
+# Home Pilot App for Graduation Thesis
 A Mobile Application in Swift for Energy Consumption Tracking
 
 This project presents an iOS application that tracks and analyzes energy usage by dividing different home devices into three main areas. These are electricity, water, and natural gas. Home Pilot App built with **Swift + UIKit**, powered by **Firebase Authentication**, **Core Data** and **Swift Charts**.
