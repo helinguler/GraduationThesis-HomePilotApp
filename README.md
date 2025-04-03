@@ -17,6 +17,9 @@ This project presents an iOS application that tracks and analyzes energy usage b
 ### Device Screen
 <img width="775" alt="Ekran Resmi 2025-04-03 20 46 28" src="https://github.com/user-attachments/assets/bc640637-83d3-4f58-9dc8-09e1e3aa09f9" />
 
+---
+
+## 🧾 Documentation
 
 📄 [Click here to access the full thesis and get detailed information about the project.](https://drive.google.com/file/d/1e5l1uUiDTU2wsMvCk38ygnz_gWE_ctCk/view?usp=sharing)
 
@@ -33,6 +36,39 @@ This project presents an iOS application that tracks and analyzes energy usage b
 - 📤 Real-Time Updates: Instant data refresh using NotificationCenter.
 - 🧩 Modular Architecture: Sustainable code structure with MVC design and Singleton pattern.
 
+---
+
+## 🗂️ Project Structure
+```bash
+HomePilotApp/
+├── AppDelegate.swift               # App lifecycle & Firebase initialization
+├── SceneDelegate.swift            # Scene session management
+├── Main.storyboard                # UI design with 6 screens
+├── GoogleService-Info.plist       # Firebase configuration file
+├── Models/                        # Data logic layer
+│   ├── Device.swift
+│   ├── DeviceMetric.swift
+│   ├── DeviceUsageResult.swift
+│   └── User.swift
+├── Views/                         # Reusable UI components
+│   ├── SourceCardCell.swift
+│   ├── DeviceCardCell.swift
+│   ├── DynamicMetricView.swift
+│   └── MarkerView.swift
+├── Controllers/                   # View controllers for each screen
+│   ├── HomeViewController.swift
+│   ├── DeviceViewController.swift
+│   ├── ChartsViewController.swift
+│   ├── LoginViewController.swift
+│   ├── SignUpViewController.swift
+│   └── TabBarController.swift
+├── CoreData/                      # Data persistence
+│   ├── HomePilotApp.xcdatamodeld
+│   └── CoreDataManager.swift
+└── Extensions/
+    └── Notification.Name+Ext.swift
+
+```
 ---
 
 ## 🛠️ Installation
@@ -66,6 +102,6 @@ Swift Charts
 ## 👩🏻‍💻 Developer
 
 **Helin Güler**  
-[LinkedIn Profilim](https://www.linkedin.com/in/helin-guler)  
-[GitHub Profilim](https://github.com/helinguler)
+- [LinkedIn Profilim](https://www.linkedin.com/in/helin-guler)  
+- [GitHub Profilim](https://github.com/helinguler)
 
